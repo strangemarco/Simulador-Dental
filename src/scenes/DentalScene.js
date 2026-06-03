@@ -105,6 +105,73 @@ export default class DentalScene extends Phaser.Scene {
     ]
   }
 
+    getToothType(number) {
+    const types = {
+      1: 'Tercer molar / muela del juicio',
+      2: 'Segundo molar',
+      3: 'Primer molar',
+      4: 'Segundo premolar',
+      5: 'Primer premolar',
+      6: 'Canino',
+      7: 'Incisivo lateral',
+      8: 'Incisivo central',
+      9: 'Incisivo central',
+      10: 'Incisivo lateral',
+      11: 'Canino',
+      12: 'Primer premolar',
+      13: 'Segundo premolar',
+      14: 'Primer molar',
+      15: 'Segundo molar',
+      16: 'Tercer molar / muela del juicio',
+      17: 'Tercer molar / muela del juicio',
+      18: 'Segundo molar',
+      19: 'Primer molar',
+      20: 'Segundo premolar',
+      21: 'Primer premolar',
+      22: 'Canino',
+      23: 'Incisivo lateral',
+      24: 'Incisivo central',
+      25: 'Incisivo central',
+      26: 'Incisivo lateral',
+      27: 'Canino',
+      28: 'Primer premolar',
+      29: 'Segundo premolar',
+      30: 'Primer molar',
+      31: 'Segundo molar',
+      32: 'Tercer molar / muela del juicio'
+    }
+
+    return types[number] || 'Diente'
+  }
+
+  getToothVisualCondition(info) {
+    if (info.isExtracted) return 'extraido'
+    if (info.isRotten) return 'podrido'
+    if (info.isSealed) return 'sellado'
+    if (info.isTreated) return 'tratado'
+    if (info.hasCaries) return 'caries'
+    if (info.isHealthyConfirmed) return 'sano'
+    if (info.isClean) return 'limpio'
+    if (info.isAnesthetized) return 'anestesiado'
+    if (info.isReviewed) return 'revisado'
+
+    return 'normal'
+  }
+
+  getToothVisualText(info) {
+    if (info.isExtracted) return 'Diente extraído'
+    if (info.isRotten) return 'Diente podrido'
+    if (info.isSealed) return 'Diente sellado'
+    if (info.isTreated) return 'Tratamiento realizado'
+    if (info.hasCaries) return 'Con caries'
+    if (info.isHealthyConfirmed) return 'Diente sano'
+    if (info.isClean) return 'Limpio'
+    if (info.isAnesthetized) return 'Anestesiado'
+    if (info.isReviewed) return 'Revisado'
+
+    return 'Sin revisión'
+  }
+
   createTeeth() {
     let number = 1
 
@@ -162,6 +229,7 @@ export default class DentalScene extends Phaser.Scene {
     tooth.dataInfo = {
       id: number,
       arcada,
+      tipo: this.getToothType(number),
       estado: 'Sano',
       herramienta: 'Ninguna',
       body,
@@ -762,15 +830,18 @@ export default class DentalScene extends Phaser.Scene {
     const info = tooth.dataInfo
 
     EventBus.emit('tooth-selected', {
-      id: info.id,
-      arcada: info.arcada,
-      estado: info.estado,
-      herramienta: info.herramienta,
-      score: this.score,
-      mensaje: message,
-      historial: [...info.historial],
-      progreso: this.getProgress()
-    })
+  id: info.id,
+  arcada: info.arcada,
+  tipo: info.tipo,
+  estado: info.estado,
+  herramienta: info.herramienta,
+  condicionVisual: this.getToothVisualCondition(info),
+  condicionTexto: this.getToothVisualText(info),
+  score: this.score,
+  mensaje: message,
+  historial: [...info.historial],
+  progreso: this.getProgress()
+})
   }
 
   getProgress() {

@@ -128,15 +128,34 @@
             </div>
           </div>
 
-          <div class="clinical-row">
-            <span>Arcada</span>
-            <strong>{{ selectedTooth.arcada }}</strong>
-          </div>
+         <div class="tooth-visual-card">
+  <div
+    class="tooth-preview"
+    :class="selectedTooth.condicionVisual"
+  >
+    <span v-if="selectedTooth.condicionVisual === 'extraido'"></span>
+  </div>
 
-          <div class="clinical-row">
-            <span>Estado</span>
-            <strong>{{ selectedTooth.estado }}</strong>
-          </div>
+  <div class="tooth-visual-info">
+    <span>Vista del diente</span>
+    <strong>{{ selectedTooth.condicionTexto }}</strong>
+  </div>
+</div>
+
+<div class="clinical-row">
+  <span>Tipo de diente</span>
+  <strong>{{ selectedTooth.tipo }}</strong>
+</div>
+
+<div class="clinical-row">
+  <span>Arcada</span>
+  <strong>{{ selectedTooth.arcada }}</strong>
+</div>
+
+<div class="clinical-row">
+  <span>Estado</span>
+  <strong>{{ selectedTooth.estado }}</strong>
+</div>
 
           <div class="clinical-row">
             <span>Herramienta</span>

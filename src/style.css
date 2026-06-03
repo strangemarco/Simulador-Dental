@@ -687,6 +687,175 @@ svg {
   background: #6b7280;
 }
 
+.tooth-visual-card {
+  margin: 14px 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tooth-preview {
+  width: 68px;
+  height: 92px;
+  min-width: 68px;
+  background: #fffbeb;
+  border: 3px solid #d6d3d1;
+  border-radius: 50% 50% 42% 42%;
+  position: relative;
+  clip-path: polygon(
+    50% 0%,
+    74% 5%,
+    90% 22%,
+    88% 43%,
+    80% 63%,
+    66% 88%,
+    56% 100%,
+    50% 88%,
+    44% 100%,
+    34% 88%,
+    20% 63%,
+    12% 43%,
+    10% 22%,
+    26% 5%
+  );
+  box-shadow:
+    inset -8px -10px 0 rgba(15, 23, 42, 0.06),
+    0 8px 16px rgba(15, 23, 42, 0.12);
+}
+
+.tooth-preview::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 24px;
+  left: 14px;
+  top: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.tooth-preview::after {
+  content: '';
+  position: absolute;
+  display: none;
+  width: 16px;
+  height: 16px;
+  right: 15px;
+  top: 34px;
+  border-radius: 999px;
+  background: #92400e;
+  border: 2px solid #78350f;
+}
+
+.tooth-preview.normal {
+  background: #fffbeb;
+  border-color: #d6d3d1;
+}
+
+.tooth-preview.revisado {
+  background: #fef3c7;
+  border-color: #facc15;
+}
+
+.tooth-preview.anestesiado {
+  background: #bfdbfe;
+  border-color: #60a5fa;
+}
+
+.tooth-preview.limpio {
+  background: #bbf7d0;
+  border-color: #22c55e;
+}
+
+.tooth-preview.sano {
+  background: #dcfce7;
+  border-color: #16a34a;
+}
+
+.tooth-preview.caries {
+  background: #fffbeb;
+  border-color: #92400e;
+}
+
+.tooth-preview.caries::after {
+  display: block;
+}
+
+.tooth-preview.podrido {
+  background: #7f1d1d;
+  border-color: #450a0a;
+}
+
+.tooth-preview.podrido::before {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.tooth-preview.podrido::after {
+  display: block;
+  width: 22px;
+  height: 22px;
+  background: #1f2937;
+  border-color: #111827;
+}
+
+.tooth-preview.tratado {
+  background: #fca5a5;
+  border-color: #ef4444;
+}
+
+.tooth-preview.tratado::after {
+  display: block;
+  background: #fca5a5;
+  border-color: #ef4444;
+}
+
+.tooth-preview.sellado {
+  background: #c4b5fd;
+  border-color: #8b5cf6;
+}
+
+.tooth-preview.sellado::after {
+  display: block;
+  background: #a78bfa;
+  border-color: #7c3aed;
+}
+
+.tooth-preview.extraido {
+  width: 70px;
+  height: 54px;
+  min-width: 70px;
+  background: #1f2937;
+  border-color: #374151;
+  clip-path: ellipse(38% 30% at 50% 55%);
+  border-radius: 999px;
+}
+
+.tooth-preview.extraido::before,
+.tooth-preview.extraido::after {
+  display: none;
+}
+
+.tooth-visual-info {
+  min-width: 0;
+}
+
+.tooth-visual-info span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.tooth-visual-info strong {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.3;
+}
+
 @media (max-width: 1400px) {
   .layout {
     grid-template-columns: minmax(210px, 240px) minmax(430px, 1fr) minmax(250px, 280px);
@@ -905,6 +1074,27 @@ svg {
   .workflow-step p,
   .legend p {
     font-size: 12px;
+  }
+
+  .tooth-visual-card {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .tooth-preview {
+    width: 56px;
+    height: 78px;
+    min-width: 56px;
+  }
+
+  .tooth-preview.extraido {
+    width: 58px;
+    height: 44px;
+    min-width: 58px;
+  }
+
+  .tooth-visual-info strong {
+    font-size: 14px;
   }
 }
 
