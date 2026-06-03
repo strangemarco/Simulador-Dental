@@ -351,9 +351,12 @@ export default {
         backgroundColor: '#e8f3f8',
         scene: [DentalScene],
         scale: {
-          mode: Phaser.Scale.FIT,
-          autoCenter: Phaser.Scale.CENTER_BOTH
-        }
+          mode: Phaser.Scale.RESIZE,
+          autoCenter: Phaser.Scale.CENTER_BOTH,
+          width: '100%',
+          height: '100%'
+        },
+        parent: this.$refs.gameContainer
       })
     },
 
