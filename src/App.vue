@@ -32,6 +32,22 @@
     </header>
 
     <main class="layout">
+      <section class="simulator-area">
+        <div class="simulator-toolbar">
+          <div>
+            <span>Área de simulación</span>
+            <strong>Vista bucal 2D interactiva</strong>
+          </div>
+
+          <div class="tool-selected">
+            <component :is="currentTool.icon" />
+            <span>{{ currentTool.name }}</span>
+          </div>
+        </div>
+
+        <div ref="gameContainer" class="game-container"></div>
+      </section>
+
       <aside class="panel tools-panel">
         <div class="panel-header">
           <div>
@@ -67,7 +83,7 @@
 
           <div class="workflow-step">
             <span>1</span>
-            <p>Revisar diente (detecta anomalías)</p>
+            <p>Revisar diente</p>
           </div>
 
           <div class="workflow-step">
@@ -77,12 +93,12 @@
 
           <div class="workflow-step">
             <span>3</span>
-            <p>Realizar tratamiento/extracción</p>
+            <p>Tratamiento o extracción</p>
           </div>
 
           <div class="workflow-step">
             <span>4</span>
-            <p>Sellado (solo si es caries)</p>
+            <p>Sellado si corresponde</p>
           </div>
         </div>
 
@@ -91,22 +107,6 @@
           Reiniciar simulación
         </button>
       </aside>
-
-      <section class="simulator-area">
-        <div class="simulator-toolbar">
-          <div>
-            <span>Área de simulación</span>
-            <strong>Vista bucal 2D interactiva</strong>
-          </div>
-
-          <div class="tool-selected">
-            <component :is="currentTool.icon" />
-            <span>{{ currentTool.name }}</span>
-          </div>
-        </div>
-
-        <div ref="gameContainer" class="game-container"></div>
-      </section>
 
       <aside class="panel detail-panel">
         <div class="panel-header">
@@ -272,6 +272,7 @@ export default {
       activeTool: 'explorador',
       selectedTooth: null,
       score: 0,
+      resizeTimer: null,
       tools: [
         {
           id: 'explorador',
@@ -331,10 +332,17 @@ export default {
         this.score = 0
       }
     })
+
+    window.addEventListener('resize', this.refreshGameScale)
   },
 
   beforeUnmount() {
     EventBus.removeAllListeners()
+    window.removeEventListener('resize', this.refreshGameScale)
+
+    if (this.resizeTimer) {
+      clearTimeout(this.resizeTimer)
+    }
 
     if (this.game) {
       this.game.destroy(true)
@@ -351,13 +359,22 @@ export default {
         backgroundColor: '#e8f3f8',
         scene: [DentalScene],
         scale: {
-          mode: Phaser.Scale.RESIZE,
-          autoCenter: Phaser.Scale.CENTER_BOTH,
-          width: '100%',
-          height: '100%'
-        },
-        parent: this.$refs.gameContainer
+          mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.CENTER_BOTH
+        }
       })
+    },
+
+    refreshGameScale() {
+      if (this.resizeTimer) {
+        clearTimeout(this.resizeTimer)
+      }
+
+      this.resizeTimer = setTimeout(() => {
+        if (this.game && this.game.scale) {
+          this.game.scale.refresh()
+        }
+      }, 150)
     },
 
     changeTool(toolId) {
